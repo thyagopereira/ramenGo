@@ -1,0 +1,28 @@
+version: '3'
+
+
+services:
+  ramengo:
+    build: ./ramenGo/
+    platform: linux/amd64
+    command: go run cmd/main.go
+    volumes:
+      - ./ramenGo:/app
+    ports:
+      - 8080:8080
+
+  mysql: 
+    build: 
+      context: ./mysql
+    platform: linux/amd64
+    command: --innodb-use-native-aio=0
+    tty: true
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports: 
+      - ${MYSQL_PORT}:${MYSQL_PORT}
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      
