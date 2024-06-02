@@ -1,6 +1,6 @@
-package database
+package databases
 
-import "github.com/ramenGo/domain/internal/entity"
+import "github.com/ramenGo/domain/entity"
 
 type Database interface {
 	FindById(id string) (entity.Entity, error)

@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/ramenGo/domain/internal/entity"
+	"github.com/ramenGo/domain/entity"
 	"github.com/ramenGo/domain/mocks"
 	"github.com/ramenGo/domain/usecases"
 	"github.com/stretchr/testify/assert"

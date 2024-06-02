@@ -1,19 +1,20 @@
-package database_test
+package databases_test
 
 import (
 	"database/sql"
 	"testing"
 
+	databases "github.com/ramenGo/domain/database"
+
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/ramenGo/domain/internal/database"
-	"github.com/ramenGo/domain/internal/entity"
+	"github.com/ramenGo/domain/entity"
 	"github.com/stretchr/testify/suite"
 )
 
 type BrothDBTestSuite struct {
 	suite.Suite
 	db      *sql.DB
-	brothDB *database.BrothDB
+	brothDB *databases.BrothDB
 	broth   *entity.Broth
 }
 
@@ -25,7 +26,7 @@ func (bs *BrothDBTestSuite) SetupSuite() {
 
 	_, err = db.Exec("CREATE TABLE broths( id varchar(255), imageInactive varchar(510), imageActive varchar(510), name varchar(255), description varchar(510), price decimal(16,14) )")
 	bs.Nil(err)
-	bs.brothDB = database.NewBrothDB(db)
+	bs.brothDB = databases.NewBrothDB(db)
 	bs.broth, _ = entity.NewBroth("someBrothPic", "anotherBrothPic", "Chicken broth", "Caipira Chicken broth good for sic ppl", 12.33)
 }
 

@@ -1,19 +1,20 @@
-package database_test
+package databases_test
 
 import (
 	"database/sql"
 	"testing"
 
+	databases "github.com/ramenGo/domain/database"
+
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/ramenGo/domain/internal/database"
-	"github.com/ramenGo/domain/internal/entity"
+	"github.com/ramenGo/domain/entity"
 	"github.com/stretchr/testify/suite"
 )
 
 type ProteinDBTestSuite struct {
 	suite.Suite
 	db        *sql.DB
-	proteinDB *database.ProteinDB
+	proteinDB *databases.ProteinDB
 	protein   *entity.Protein
 }
 
@@ -25,7 +26,7 @@ func (ps *ProteinDBTestSuite) SetupSuite() {
 
 	_, err = db.Exec("CREATE TABLE proteins( id varchar(255), imageInactive varchar(510), imageActive varchar(510), name varchar(255), description varchar(510), price decimal(16,14) )")
 	ps.Nil(err)
-	ps.proteinDB = database.NewProteinDB(db)
+	ps.proteinDB = databases.NewProteinDB(db)
 	ps.protein, _ = entity.NewProtein("someProteinPic", "anotherProteinPic", "Chicken", "Caipira Chicken", 15.204)
 }
 

@@ -1,26 +1,26 @@
 package usecases
 
 import (
-	"github.com/ramenGo/domain/internal/database"
-	"github.com/ramenGo/domain/internal/entity"
+	databases "github.com/ramenGo/domain/database"
+	"github.com/ramenGo/domain/entity"
 )
 
 type ListProteinsUseCase struct {
-	database database.Database
+	database databases.Database
 }
 
 type ListProteinsDTO struct {
 	Proteins []entity.Entity
 }
 
-func NewListProteinsUseCase(db database.Database) (*ListProteinsUseCase, error) {
+func NewListProteinsUseCase(db databases.Database) (*ListProteinsUseCase, error) {
 
 	return &ListProteinsUseCase{
 		database: db,
 	}, nil
 }
 
-func (uc *ListProteinsUseCase) Execute() (*ListProteinsDTO, error) {
+func (uc *ListProteinsUseCase) Execute() (interface{}, error) {
 	result, err := uc.database.GetAll()
 	if err != nil {
 		return nil, err

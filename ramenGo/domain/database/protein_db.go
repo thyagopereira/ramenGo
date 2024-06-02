@@ -1,10 +1,10 @@
-package database
+package databases
 
 import (
 	"database/sql"
 	"errors"
 
-	"github.com/ramenGo/domain/internal/entity"
+	"github.com/ramenGo/domain/entity"
 )
 
 type ProteinDB struct {
