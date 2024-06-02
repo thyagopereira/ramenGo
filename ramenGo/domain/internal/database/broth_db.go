@@ -66,12 +66,7 @@ func (b *BrothDB) FindById(id string) (entity.Entity, error) {
 func (b *BrothDB) GetAll() ([]entity.Entity, error) {
 	broths := make([]entity.Entity, 0)
 
-	stmt, err := b.DB.Prepare("SELECT id, imageInactive, imageActive, name, description, price FROM broths")
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-	rows, err := stmt.Query(stmt)
+	rows, err := b.DB.Query("SELECT id, imageInactive, imageActive, name, description, price FROM broths")
 	if err != nil {
 		return nil, err
 	}

@@ -24,6 +24,7 @@ func (bs *BrothDBTestSuite) SetupSuite() {
 	bs.db = db
 
 	_, err = db.Exec("CREATE TABLE broths( id varchar(255), imageInactive varchar(510), imageActive varchar(510), name varchar(255), description varchar(510), price decimal(16,14) )")
+	bs.Nil(err)
 	bs.brothDB = database.NewBrothDB(db)
 	bs.broth, _ = entity.NewBroth("someBrothPic", "anotherBrothPic", "Chicken broth", "Caipira Chicken broth good for sic ppl", 12.33)
 }
@@ -55,4 +56,17 @@ func (bs *BrothDBTestSuite) TestFindById() {
 	broth := result.(*entity.Broth)
 	bs.Equal(id, broth.Id)
 	bs.EqualValues(bs.broth, broth)
+}
+
+func (bs *BrothDBTestSuite) TestGetAll() {
+	// Saving some broths
+	anotherBroth, _ := entity.NewBroth("someBroth2", "anotherBrothPic2", "Vegetable broth", "Full vegetable broth good for sic ppl", 10.00)
+	bs.brothDB.Save(anotherBroth)
+
+	expected := []entity.Entity{bs.broth, anotherBroth}
+	result, err := bs.brothDB.GetAll()
+
+	bs.Nil(err)
+	bs.NotNil(result)
+	bs.EqualValues(expected, result)
 }
