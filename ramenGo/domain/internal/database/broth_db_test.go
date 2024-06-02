@@ -2,7 +2,6 @@ package database_test
 
 import (
 	"database/sql"
-	"fmt"
 	"testing"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -25,7 +24,6 @@ func (bs *BrothDBTestSuite) SetupSuite() {
 	bs.db = db
 
 	_, err = db.Exec("CREATE TABLE broths( id varchar(255), imageInactive varchar(510), imageActive varchar(510), name varchar(255), description varchar(510), price decimal(16,14) )")
-	fmt.Println(err)
 	bs.brothDB = database.NewBrothDB(db)
 	bs.broth, _ = entity.NewBroth("someBrothPic", "anotherBrothPic", "Chicken broth", "Caipira Chicken broth good for sic ppl", 12.33)
 }
@@ -40,8 +38,21 @@ func TestBrothDBTestSuite(t *testing.T) {
 }
 
 func (bs *BrothDBTestSuite) TestSave() {
-	bs.SetupSuite()
 	broth := bs.broth
 	err := bs.brothDB.Save(broth)
 	bs.Nil(err)
+}
+
+func (bs *BrothDBTestSuite) TestFindById() {
+
+	bs.brothDB.Save(bs.broth)
+	id := bs.broth.Id
+
+	result, err := bs.brothDB.FindById(id)
+
+	bs.Nil(err)
+	bs.NotNil(result)
+	broth := result.(*entity.Broth)
+	bs.Equal(id, broth.Id)
+	bs.EqualValues(bs.broth, broth)
 }
