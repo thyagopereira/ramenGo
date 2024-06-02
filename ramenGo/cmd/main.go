@@ -47,7 +47,7 @@ func main() {
 
 	wb := api.NewWebServer()
 	wb.Router.Use(api.AuthMiddleware(config.API_KEY))
-	wb.AddNewGetRoute("/broths", listBrothsUc)
-	wb.AddNewGetRoute("/proteins", listProteinsUc)
+	wb.AddNewGetBrothsRoute("/broths", listBrothsUc)
+	wb.AddNewGetProteinsRoute("/proteins", listProteinsUc)
 	wb.Router.Run() // Default port 8080
 }

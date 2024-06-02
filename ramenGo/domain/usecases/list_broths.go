@@ -20,7 +20,7 @@ func NewListBrothsUseCase(db databases.Database) (*ListBrothsUseCase, error) {
 	}, nil
 }
 
-func (uc *ListBrothsUseCase) Execute() (interface{}, error) {
+func (uc *ListBrothsUseCase) Execute() (*ListBrothsDTO, error) {
 	result, err := uc.database.GetAll()
 	if err != nil {
 		return nil, err

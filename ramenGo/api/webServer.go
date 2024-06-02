@@ -1,7 +1,6 @@
 package api
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,18 +17,28 @@ func NewWebServer() *WebServer {
 	}
 }
 
-func (w *WebServer) AddNewGetRoute(path string, uc usecases.Usecase) {
+func (w *WebServer) AddNewGetBrothsRoute(path string, uc *usecases.ListBrothsUseCase) {
 	w.Router.GET(path, func(c *gin.Context) {
 		result, err := uc.Execute()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
 		}
 
-		json, err := json.Marshal(result)
+		c.JSON(http.StatusOK, result.Broths)
+		return
+	})
+}
+
+func (w *WebServer) AddNewGetProteinsRoute(path string, uc *usecases.ListProteinsUseCase) {
+	w.Router.GET(path, func(c *gin.Context) {
+		result, err := uc.Execute()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
 		}
-		c.JSON(http.StatusAccepted, json)
+
+		c.JSON(http.StatusOK, result.Proteins)
 		return
 	})
 }

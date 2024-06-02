@@ -1,0 +1,5 @@
+GET http://localhost:8080/broths HTTP/1.1
+x-api-key: 78c15bef-829f-4ee6-97c2-6707a94394b0
+
+GET http://localhost:8080/proteins HTTP/1.1
+x-api-key: 78c15bef-829f-4ee6-97c2-6707a94394b0

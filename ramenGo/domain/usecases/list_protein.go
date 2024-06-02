@@ -20,7 +20,7 @@ func NewListProteinsUseCase(db databases.Database) (*ListProteinsUseCase, error)
 	}, nil
 }
 
-func (uc *ListProteinsUseCase) Execute() (interface{}, error) {
+func (uc *ListProteinsUseCase) Execute() (*ListProteinsDTO, error) {
 	result, err := uc.database.GetAll()
 	if err != nil {
 		return nil, err

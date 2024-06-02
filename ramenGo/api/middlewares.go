@@ -8,9 +8,14 @@ import (
 
 func AuthMiddleware(API_KEY string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if c.Request.Header["x-api-key"][0] != API_KEY {
+		header := c.Request.Header["X-Api-Key"]
+		if len(header) == 0 || header[0] != API_KEY {
 			c.JSON(http.StatusForbidden, gin.H{"error": "x-api-key header missing"})
+			c.Abort()
+		} else {
+			c.Next()
+			return
 		}
-		c.Next()
+
 	}
 }
