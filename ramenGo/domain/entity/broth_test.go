@@ -3,7 +3,7 @@ package entity_test
 import (
 	"testing"
 
-	"github.com/ramenGo/domain/internal/entity"
+	"github.com/ramenGo/domain/entity"
 	"github.com/stretchr/testify/assert"
 )
 
