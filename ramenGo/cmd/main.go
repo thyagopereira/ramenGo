@@ -35,6 +35,7 @@ func main() {
 
 	brothDb := databases.NewBrothDB(db)
 	proteinDb := databases.NewProteinDB(db)
+	orderDb := databases.NewOrderDB(db)
 
 	listBrothsUc, err := usecases.NewListBrothsUseCase(brothDb)
 	if err != nil {
@@ -44,10 +45,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	createOrderUc, err := usecases.NewCreateOrderUseCase(orderDb)
 
 	wb := api.NewWebServer()
 	wb.Router.Use(api.AuthMiddleware(config.API_KEY))
 	wb.AddNewGetBrothsRoute("/broths", listBrothsUc)
 	wb.AddNewGetProteinsRoute("/proteins", listProteinsUc)
+	wb.AddNewCreateOrderRoute("/orders", createOrderUc)
 	wb.Router.Run() // Default port 8080
 }
