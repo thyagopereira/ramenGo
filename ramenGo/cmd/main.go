@@ -46,6 +46,9 @@ func main() {
 		panic(err)
 	}
 	createOrderUc, err := usecases.NewCreateOrderUseCase(orderDb)
+	if err != nil {
+		panic(err)
+	}
 
 	wb := api.NewWebServer()
 	wb.Router.Use(api.AuthMiddleware(config.API_KEY))
