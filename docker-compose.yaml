@@ -2,20 +2,20 @@ version: '3'
 
 services:
   ramengo:
-    build: ./ramenGo/
+    image: thyagopereira/ramengo:latest
     platform: linux/amd64
     command: go run cmd/main.go
     volumes:
       - ./ramenGo:/app
     ports:
-      - ${API_PORT}:${API_PORT}
+      - 8080:8080
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_PORT: ${MYSQL_PORT}
-      API_KEY: ${API_KEY}
-      AṔI_PORT: ${API_PORT}
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ramenGo
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      API_KEY: 78c15bef-829f-4ee6-97c2-6707a94394b0
+      AṔI_PORT: 8080
   mysql: 
     build: 
       context: ./mysql
@@ -23,11 +23,11 @@ services:
     command: --innodb-use-native-aio=0
     tty: true
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ramenGo
+      MYSQL_PASSWORD: root
     ports: 
-      - ${MYSQL_PORT}:${MYSQL_PORT}
+      - 3306:3306
     volumes:
       - ./mysql/data:/var/lib/mysql
       
